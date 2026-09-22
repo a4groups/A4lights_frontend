@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@layer theme {
+  :root {
+    --font-sans: "Manrope", sans-serif;
+    --font-serif: "Cormorant Garamond", serif;
+  }
+}
+
+:root {
+  --background: oklch(98.5% 0.008 85);
+  --foreground: oklch(22.5% 0.012 65);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(12.9% 0.042 264.695);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(12.9% 0.042 264.695);
+  --primary: oklch(25% 0.012 65);
+  --primary-foreground: oklch(98.5% 0.008 85);
+  --secondary: oklch(96.8% 0.007 247.896);
+  --secondary-foreground: oklch(20.8% 0.042 265.755);
+  --muted: oklch(94% 0.015 82);
+  --muted-foreground: oklch(52% 0.018 65);
+  --accent: oklch(96.8% 0.007 247.896);
+  --accent-foreground: oklch(20.8% 0.042 265.755);
+  --destructive: oklch(57.7% 0.245 27.325);
+  --destructive-foreground: oklch(98.4% 0.003 247.858);
+  --border: oklch(84% 0.018 78);
+  --input: oklch(84% 0.018 78);
+  --ring: oklch(62% 0.07 76);
+  --ivory: oklch(98.5% 0.012 88);
+  --charcoal: oklch(21% 0.012 60);
+  --gold: oklch(66% 0.075 75);
+  --champagne: oklch(83% 0.055 77);
+  --soft: oklch(95.5% 0.017 82);
+}
+
+@theme {
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-border: var(--border);
+  --color-gold: var(--gold);
+  --color-champagne: var(--champagne);
+  --color-charcoal: var(--charcoal);
+  --color-ivory: var(--ivory);
+  --color-soft: var(--soft);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.bg-hero-overlay {
+  background: linear-gradient(90deg, oklch(15% 0.01 60 / 0.82) 0%, oklch(15% 0.01 60 / 0.46) 43%, oklch(15% 0.01 60 / 0.08) 75%),
+              linear-gradient(transparent 55%, oklch(15% 0.01 60 / 0.35));
+}
+
+.bg-cta-overlay {
+  background: oklch(12% 0.01 60 / 0.58);
+}
+
+.light-sweep {
+  background: linear-gradient(105deg, transparent 30%, oklch(85% 0.08 80 / 0.09) 48%, transparent 66%) 0 0 / 240% 100%;
+  animation: 12s ease-in-out infinite alternate light-sweep;
+}
+
+@keyframes light-sweep {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -80% 0;
+  }
+}
+
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  letter-spacing: 0;
+  font-size: clamp(3rem, 5.5vw, 5.8rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.shadow-soft {
+  box-shadow: 0 8px 30px oklch(20% 0.01 65 / 0.07);
+}
