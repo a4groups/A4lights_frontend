@@ -21,7 +21,10 @@ export default function OrderDetailPage() {
 
   useEffect(() => {
     api.get(`/api/orders/${id}`)
-      .then(({ data }) => setOrder(data.data))
+      .then(({ data }) => {
+        const orderData = data?.data?.order ?? data?.data ?? null;
+        setOrder(orderData);
+      })
       .catch(() => router.push("/orders"))
       .finally(() => setLoading(false));
   }, [id, router]);
@@ -39,9 +42,9 @@ export default function OrderDetailPage() {
 
   if (!order) return null;
 
-  const items = order.items as { name: string; quantity: number; price: number; image: string }[];
-  const addr = order.shippingAddress as Record<string, string>;
-  const statusIdx = STATUS_STEPS.indexOf(order.status as string);
+  const items = ((order.items ?? []) as { name: string; quantity: number; price: number; image?: string }[]);
+  const addr = ((order.shippingAddress ?? {}) as Record<string, string>);
+  const statusIdx = STATUS_STEPS.indexOf((order.status as string) || "pending");
 
   return (
     <AuthGuard>
@@ -54,12 +57,12 @@ export default function OrderDetailPage() {
             <div className="flex flex-wrap items-end gap-6">
               <div>
                 <p className="section-label text-champagne">Order Detail</p>
-                <h1 className="font-serif text-4xl text-ivory">{order.orderNumber as string}</h1>
+                <h1 className="font-serif text-4xl text-ivory">{(order.orderNumber as string) || "Order"}</h1>
                 <p className="mt-2 text-sm text-ivory/50">
-                  Placed on {new Date(order.createdAt as string).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
+                  {order.createdAt ? `Placed on ${new Date(order.createdAt as string).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}` : "Recent Order"}
                 </p>
               </div>
-              <OrderStatusBadge status={order.status as string} />
+              <OrderStatusBadge status={(order.status as string) || "pending"} />
             </div>
           </div>
         </section>
@@ -116,7 +119,7 @@ export default function OrderDetailPage() {
               </div>
               <div className="mt-6 flex justify-between border-t border-border pt-6">
                 <span className="text-sm font-semibold uppercase tracking-wider">Total</span>
-                <span className="font-serif text-2xl">₹{(order.totalAmount as number).toLocaleString("en-IN")}</span>
+                <span className="font-serif text-2xl">₹{((order.totalAmount as number) || 0).toLocaleString("en-IN")}</span>
               </div>
             </div>
 
@@ -125,11 +128,11 @@ export default function OrderDetailPage() {
               <div className="border border-border p-6">
                 <p className="section-label">Delivery Address</p>
                 <div className="mt-4 text-sm leading-7 text-muted-foreground">
-                  <p className="font-semibold text-foreground">{addr.fullName}</p>
-                  <p>{addr.phone}</p>
-                  <p>{addr.street}</p>
-                  <p>{addr.city}, {addr.state}</p>
-                  <p>{addr.pincode}, {addr.country}</p>
+                  <p className="font-semibold text-foreground">{addr?.fullName || "—"}</p>
+                  {addr?.phone && <p>{addr.phone}</p>}
+                  {addr?.street && <p>{addr.street}</p>}
+                  {(addr?.city || addr?.state) && <p>{[addr?.city, addr?.state].filter(Boolean).join(", ")}</p>}
+                  {(addr?.pincode || addr?.country) && <p>{[addr?.pincode, addr?.country].filter(Boolean).join(", ")}</p>}
                 </div>
               </div>
               {order.notes && (

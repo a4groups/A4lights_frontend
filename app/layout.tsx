@@ -4,6 +4,7 @@ import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart";
 import { ClientLayout } from "@/components/ClientLayout";
 import { Toaster } from "react-hot-toast";
+import { ToastProvider } from "@/components/ToastProvider";
 
 export const metadata: Metadata = {
   title: "A4LIGHTS — Architectural LED Lighting Solutions",
@@ -66,6 +67,7 @@ export default function RootLayout({
                 },
               }}
             />
+            <ToastProvider />
           </CartProvider>
         </AuthProvider>
       </body>

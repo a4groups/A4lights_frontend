@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { GuestGuard } from "@/components/auth/AuthGuard";
-import toast from "react-hot-toast";
+import { toast } from "@/lib/toast";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 

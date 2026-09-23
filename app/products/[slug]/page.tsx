@@ -9,7 +9,7 @@ import api from "@/lib/api";
 import { useCart } from "@/lib/cart";
 import { useAuth } from "@/lib/auth";
 import { Skeleton } from "@/components/ui/Skeleton";
-import toast from "react-hot-toast";
+import { toast, notifyProductAdded } from "@/lib/toast";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -43,11 +43,25 @@ export default function ProductDetailPage() {
   }, [slug, router]);
 
   const handleAddToCart = async () => {
-    if (!isAuthenticated) { toast.error("Please sign in to add items to cart."); router.push("/login"); return; }
+    if (!isAuthenticated) {
+      toast.warn("Please sign in to add items to cart.");
+      router.push("/login");
+      return;
+    }
     setAdding(true);
     try {
       await addToCart((product as { _id: string })._id, quantity);
-      toast.success("Added to cart!");
+      const prod = product as {
+        name?: string;
+        price?: number;
+        images?: { url: string }[];
+      };
+      notifyProductAdded({
+        name: prod?.name || "Product",
+        image: prod?.images?.[0]?.url ?? "/assets/a4lights-product-DkxLuMym.jpg",
+        price: prod?.price,
+        quantity,
+      });
     } catch (err: unknown) {
       toast.error((err as { response?: { data?: { message?: string } } })?.response?.data?.message ?? "Could not add to cart.");
     } finally {

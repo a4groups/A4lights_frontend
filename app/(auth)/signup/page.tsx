@@ -8,7 +8,7 @@ import { ArrowUpRight, Eye, EyeOff } from "lucide-react";
 import api from "@/lib/api";
 import { GuestGuard } from "@/components/auth/AuthGuard";
 import { PasswordStrength } from "@/components/ui/PasswordStrength";
-import toast from "react-hot-toast";
+import { toast } from "@/lib/toast";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 

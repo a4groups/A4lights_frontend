@@ -102,3 +102,32 @@ html {
 .shadow-soft {
   box-shadow: 0 8px 30px oklch(20% 0.01 65 / 0.07);
 }
+
+/* React Toastify Custom Styling */
+.Toastify__toast-theme--dark {
+  background: #171614 !important;
+  color: #fbf9f4 !important;
+  border: 1px solid rgba(197, 168, 128, 0.25) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45) !important;
+  border-radius: 2px !important;
+  font-family: var(--font-sans), sans-serif !important;
+  padding: 12px 14px !important;
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--success {
+  border-left: 3px solid #c5a880 !important;
+}
+
+.Toastify__progress-bar-theme--dark {
+  background: linear-gradient(to right, #9e825a, #d4b88f) !important;
+  height: 2px !important;
+}
+
+.Toastify__close-button--dark {
+  color: #c5a880 !important;
+  opacity: 0.7;
+}
+
+.Toastify__close-button--dark:hover {
+  opacity: 1;
+}

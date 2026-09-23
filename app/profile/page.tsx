@@ -7,7 +7,7 @@ import api from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { AuthGuard } from "@/components/auth/AuthGuard";
 import { Skeleton } from "@/components/ui/Skeleton";
-import toast from "react-hot-toast";
+import { toast } from "@/lib/toast";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const TABS = ["Profile", "Addresses"] as const;
@@ -42,7 +42,7 @@ export default function ProfilePage() {
   useEffect(() => {
     setAddrLoading(true);
     api.get("/api/users/profile")
-      .then(({ data }) => setAddresses(data.data?.addresses ?? []))
+      .then(({ data }) => setAddresses(data.data?.addresses ?? data.data?.user?.addresses ?? []))
       .finally(() => setAddrLoading(false));
   }, []);
 
@@ -60,7 +60,7 @@ export default function ProfilePage() {
 
   const fetchAddresses = async () => {
     const { data } = await api.get("/api/users/profile");
-    setAddresses(data.data?.addresses ?? []);
+    setAddresses(data.data?.addresses ?? data.data?.user?.addresses ?? []);
   };
 
   const handleSaveAddress = async (e: React.FormEvent) => {

@@ -8,7 +8,7 @@ import { useCart } from "@/lib/cart";
 import { AuthGuard } from "@/components/auth/AuthGuard";
 import { CartItemSkeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
-import toast from "react-hot-toast";
+import { toast } from "@/lib/toast";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 

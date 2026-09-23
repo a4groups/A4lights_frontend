@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, ShoppingCart } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { useAuth } from "@/lib/auth";
-import toast from "react-hot-toast";
+import { toast, notifyProductAdded } from "@/lib/toast";
 import { useRouter } from "next/navigation";
 
 interface Product {
@@ -30,14 +30,19 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
 
   const handleAddToCart = async () => {
     if (!isAuthenticated) {
-      toast.error("Please sign in to add items to cart.");
+      toast.warn("Please sign in to add items to cart.");
       router.push("/login");
       return;
     }
     setAdding(true);
     try {
       await addToCart(product._id);
-      toast.success(`${product.name} added to cart.`);
+      notifyProductAdded({
+        name: product.name,
+        image: product.images?.[0]?.url ?? "/assets/a4lights-product-DkxLuMym.jpg",
+        price: product.price,
+        quantity: 1,
+      });
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message ?? "Could not add to cart.";
       toast.error(msg);
